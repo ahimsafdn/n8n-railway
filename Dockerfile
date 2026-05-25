@@ -1,11 +1,3 @@
-FROM n8nio/n8n:latest
-
-USER root
-ENV CI=true
-RUN mkdir -p /home/node/.n8n/nodes && \
-    cd /home/node/.n8n/nodes && \
-    npm init -y && \
-    npm install @n8n/n8n-nodes-langchain --omit=optional --no-save && \
-    rm -rf /home/node/.n8n/nodes/node_modules/n8n-nodes-base && \
-    chown -R node:node /home/node/.n8n
-USER node
+# Pin n8n base image — never use floating `:latest` here, see PR #fix/remove-redundant-langchain-install.
+# When upgrading, bump this tag deliberately and smoke-test workflows.
+FROM n8nio/n8n:2.21.7
